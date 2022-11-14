@@ -48,10 +48,13 @@ class Calculator extends StatelessWidget {
                 ),
                 SizedBox(height: 10.0),
                 Consumer<CalculatorProvider>(
-                  builder: (context, equation, child) => Text(
-                    equation.result,
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
+                  builder: (context, equation, child) => Semantics(
+                      label: 'result',
+                      child: Text(
+                        equation.result,
+                        key: Key('result'),
+                        style: Theme.of(context).textTheme.headline3,
+                      )),
                 ),
               ],
             ),

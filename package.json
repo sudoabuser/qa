@@ -1,0 +1,32 @@
+{
+  "name": "flutter-calculator",
+  "version": "1.0.0",
+  "description": "**Preview :**",
+  "main": "demo.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "cucumber-js",
+    "demo": "node demo.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/01mahdivalipoor/flutter-calculator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/01mahdivalipoor/flutter-calculator/issues"
+  },
+  "homepage": "https://github.com/01mahdivalipoor/flutter-calculator#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^8.7.0"
+  },
+  "dependencies": {
+    "@wdio/cli": "^7.25.4",
+    "appium": "^1.22.3",
+    "webdriverio": "^7.25.4"
+  }
+}
