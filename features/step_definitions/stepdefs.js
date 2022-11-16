@@ -22,11 +22,9 @@ const opts = {
     logLevel: "error"
 
 };
-const driver = wdio.remote(opts);
 
 
-async function main() {
-  
+
 
     var sumVar = 0;
     var productVar = 1;
@@ -35,6 +33,7 @@ async function main() {
 
     
     Given("bob clicked AC", async function () {
+        const driver = await wdio.remote(opts);
         let attribute = await driver.$('~AC');
         sumVar = 0;
         productVar = 1;
@@ -45,7 +44,7 @@ async function main() {
     });
 
     When("bob clicks <{int}>", async function (int) {
-        const driver = wdio.remote(opts);
+        const driver = await wdio.remote(opts);
         productVar *= int;
         sumVar += int;
         divisionVar /= int;
@@ -59,7 +58,7 @@ async function main() {
 
 
     When("bob clicks plus", async function () {
-        const driver = wdio.remote(opts);
+        const driver = await wdio.remote(opts);
 
         let attribute = await driver.$('~ + ');
         await attribute.click();
@@ -67,7 +66,7 @@ async function main() {
     });
 
     When("bob clicks divide", async function () {
-        const driver = wdio.remote(opts);
+        const driver = await wdio.remote(opts);
 
         let attribute = await driver.$('~ ÷ ');
         await attribute.click();
@@ -75,7 +74,7 @@ async function main() {
     });
 
     When("bob clicks minus", async function () {
-        const driver = wdio.remote(opts);
+        const driver = await wdio.remote(opts);
 
 
         let attribute = await driver.$('~ - ');
@@ -84,30 +83,24 @@ async function main() {
     });
 
     When("bob clicks cross", async function () {
-        const driver = wdio.remote(opts);
+        const driver = await wdio.remote(opts);
         let attribute = await driver.$('~ × ');
         await attribute.click();
         console.log(" × clicked");
     })
+    
     Then("bob should see the result <{int}>", async function (int) {
-        const driver = wdio.remote(opts);
+        const driver = await wdio.remote(opts);
         let attribute = await driver.$('~' + int);
         console.log("sum is: " + sumVar);
 
-        var resultSelector = 'new UiSelector().descriptionContains("result")';
-        const resultText = await driver.$('android=' + resultSelector).getText();
-
-        console.log("RESULT_TEXT: " + resultText);
-        assert.strictEqual(int, resultText);
-        try {
-
-            assert.strictEqual(int, resultText);
-        } catch (error) {
-            throw Error("Custom error occured")
-            console.log("Error is caught: ", error);
-        }
-
+        var resultSelector = 'new UiSelector().className("android.view.View").descriptionContains("result")';
+        var resultElement = await driver.$('android=' + resultSelector);
+        var resultContent = await resultElement.getAttribute("content-desc")+ ' ';
+        console.log("result: ", resultContent.slice(7, -1));
+        assert.equal(int, resultContent.slice(7, -1));
     })
+
 
 
 
@@ -135,6 +128,4 @@ async function main() {
 
     //     assert.strictEqual(int, divisionVar);
     // })
-}
 
-main()
